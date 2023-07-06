@@ -1,0 +1,58 @@
+/// <reference types="Cypress"/>
+/// <reference types="cypress-xpath"/>
+const CREDENTIALS = require('../fixtures/Credentials.json')
+import 'cypress-wait-until';
+Cypress.on('uncaught:exception', (err, runnable) => {
+    return false;
+  });
+describe('Workbench login and Dashboard',function()
+{
+    
+    it('Admin Login',function()
+    {
+        cy.visit('http://localhost:9001/workbench/projects')
+        cy.get('[name="username"]').type('admin@grn.com').should('have.value','admin@grn.com')
+        cy.get('[name="password"]').type('password').should('have.value','password')
+        cy.get('[type="submit"]').click()
+    })
+    it('Dashboard Menu',function()
+    {
+        cy.contains('TestSantoshiMP').click()
+        cy.wait(1000)
+        cy.get(':nth-child(4) > .nav-link').click()
+        cy.get('h2').should('have.text','Projects')
+        cy.wait(1000)
+        cy.get(':nth-child(5) > .nav-link').click()
+        cy.get('h2').should('have.text','Chat Details')
+        cy.wait(1000)
+        cy.get(':nth-child(6) > .nav-link').click()
+        cy.get('h2').should('have.text','Data Collections')
+        cy.wait(1000)
+        cy.get(':nth-child(7) > .nav-link').click()
+        cy.get('h2').should('have.text','Cohorts')
+        cy.wait(1000)
+        cy.get(':nth-child(8) > .nav-link').click()
+        cy.get('h2').should('have.text','Users')
+        cy.wait(1000)
+        cy.get(':nth-child(9) > .nav-link').click()
+        cy.get('h2').should('have.text','Configure Report')
+        cy.wait(1000)
+        cy.get(':nth-child(10) > .nav-link').click()
+        cy.get('h2').should('have.text','Categories')
+        cy.wait(1000)
+        cy.get(':nth-child(11) > .nav-link').click()
+        cy.get('h2').should('have.text','ICD Codes')
+        cy.wait(1000)
+        cy.get('.nav-hide').click()
+        cy.get('#menu_10 > :nth-child(1)').click()
+        cy.wait(1000)
+        cy.get('#menu_10 > :nth-child(2) > a').click({force:true})
+        cy.get('h2').should('have.text','Audit History')
+        cy.wait(1000)
+        cy.get(':nth-child(14) > .nav-link').click()
+        cy.get('h2').should('have.text','Reports')
+        cy.wait(1000)
+        cy.get(':nth-child(15) > .nav-link').click()
+        cy.get('h2').should('have.text','Summary Data Report')
+    })
+})
